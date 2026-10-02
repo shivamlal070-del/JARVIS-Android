@@ -130,7 +130,7 @@ class VoiceAntiSpoofingManager(private val context: Context) {
     }
 
     private fun calculateMaximumEnergyStep(samples: ShortArray): Int {
-        var maxDelta = 0
+        var maxDelta = 0.0
         for (i in 0 until samples.size - 1) {
             val diff = kotlin.math.abs(samples[i + 1].toDouble() - samples[i].toDouble())
             if (diff > maxDelta) maxDelta = diff
@@ -138,6 +138,8 @@ class VoiceAntiSpoofingManager(private val context: Context) {
         return maxDelta
     }
 }
+
+
 
 
 
