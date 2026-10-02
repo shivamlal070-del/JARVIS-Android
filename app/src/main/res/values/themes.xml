@@ -1,0 +1,7 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.JARVIS" parent="android:Theme.Material.NoActionBar">
+        <item name="android:statusBarColor">#050811</item>
+        <item name="android:navigationBarColor">#050811</item>
+        <item name="android:windowBackground">#050811</item>
+    </style>
+</resources>

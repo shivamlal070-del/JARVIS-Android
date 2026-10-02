@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.jarvis.assistant">
+
+    <!-- Voice and Audio Permissions -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+    <!-- Network and AI -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <!-- Camera for DPP and Notebook Analysis -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+
+    <!-- Foreground Service & Wake Lock -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- Overlay & Alerts (Optional HUD floating pill) -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <!-- Android 11 Package Visibility Queries -->
+    <queries>
+        <package android:name="com.google.android.youtube" />
+        <package android:name="com.openai.chatgpt" />
+        <package android:name="com.google.android.apps.bard" />
+        <package android:name="com.google.android.apps.gemini" />
+        <package android:name="com.google.android.googlequicksearchbox" />
+        <package android:name="com.whatsapp" />
+        <package android:name="com.android.chrome" />
+        <package android:name="com.sec.android.app.popupcalculator" />
+        <package android:name="com.google.android.calculator" />
+        <package android:name="com.sec.android.app.clockpackage" />
+        <package android:name="com.google.android.deskclock" />
+        <package android:name="com.sec.android.app.myfiles" />
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+        </intent>
+    </queries>
+
+    <application
+        android:name=".JarvisApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.JARVIS">
+
+        <!-- Main Activity -->
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:theme="@style/Theme.JARVIS">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- Voice Assist Intent -->
+            <intent-filter>
+                <action android:name="android.intent.action.ASSIST" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- Legit Accessibility Service for Cross-App Interaction -->
+        <service
+            android:name=".core.device.JarvisAccessibilityService"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="true"
+            android:label="JARVIS Assistant Controller"
+            android:description="@string/accessibility_service_description">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_config" />
+        </service>
+
+        <!-- Foreground Service for Battery-Conscious Wake Word & Voice Operation -->
+        <service
+            android:name=".service.JarvisForegroundVoiceService"
+            android:exported="false"
+            android:foregroundServiceType="microphone" />
+
+        <!-- Native Voice Engine Foreground Service -->
+        <service
+            android:name=".core.voice.VoiceEngine"
+            android:exported="false"
+            android:foregroundServiceType="microphone" />
+
+        <!-- Alarm / Timer Broadcast Receiver -->
+        <receiver
+            android:name=".core.device.JarvisAlarmReceiver"
+            android:exported="false" />
+
+    </application>
+
+</manifest>

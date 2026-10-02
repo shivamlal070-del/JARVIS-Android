@@ -1,0 +1,8 @@
+<resources>
+    <color name="jarvis_background">#050811</color>
+    <color name="jarvis_surface">#0D1527</color>
+    <color name="jarvis_cyan">#00E5FF</color>
+    <color name="jarvis_blue">#0052FF</color>
+    <color name="jarvis_accent">#38E8FF</color>
+    <color name="jarvis_text">#E0F7FA</color>
+</resources>
