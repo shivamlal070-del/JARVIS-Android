@@ -1,4 +1,4 @@
-package com.jarvis.assistant.core.device
+﻿package com.jarvis.assistant.core.device
 
 import android.accessibilityservice.AccessibilityService
 import android.content.Context
@@ -27,6 +27,15 @@ class AccessibilityController(private val context: Context) {
     fun pressHome(): Boolean {
         val service = JarvisAccessibilityService.activeInstance ?: return false
         return service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_HOME)
+    }
+
+    fun performBack(): Boolean = pressBack()
+
+    fun performHome(): Boolean = pressHome()
+
+    fun performRecents(): Boolean {
+        val service = JarvisAccessibilityService.activeInstance ?: return false
+        return service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_RECENTS)
     }
 
     fun extractVisibleScreenText(): String {
@@ -66,3 +75,4 @@ class AccessibilityController(private val context: Context) {
         return service.typeTextIntoFocusedNode(text)
     }
 }
+

@@ -1,4 +1,4 @@
-package com.jarvis.assistant.core.security
+﻿package com.jarvis.assistant.core.security
 
 import android.content.Context
 import android.media.AudioDeviceInfo
@@ -112,8 +112,8 @@ class VoiceAntiSpoofingManager(private val context: Context) {
         var highFreqEnergy = 0.0
         var totalEnergy = 0.0
         for (i in 0 until samples.size - 1) {
-            val delta = abs(samples[i + 1] - samples[i]).toDouble()
-            val magnitude = abs(samples[i]).toDouble()
+            val delta = kotlin.math.abs(samples[i + 1].toDouble() - samples[i].toDouble())
+            val magnitude = kotlin.math.abs(samples[i].toDouble())
             highFreqEnergy += delta
             totalEnergy += magnitude
         }
@@ -124,7 +124,7 @@ class VoiceAntiSpoofingManager(private val context: Context) {
         if (samples.size < 800) return 0.01f
         var variance = 0.0
         for (i in 200 until samples.size - 200 step 80) {
-            variance += abs(samples[i].toDouble() - samples[i - 40].toDouble())
+            variance += kotlin.math.abs(samples[i].toDouble() - samples[i - 40].toDouble())
         }
         return (variance / samples.size / 32768.0).toFloat()
     }
@@ -132,9 +132,12 @@ class VoiceAntiSpoofingManager(private val context: Context) {
     private fun calculateMaximumEnergyStep(samples: ShortArray): Int {
         var maxDelta = 0
         for (i in 0 until samples.size - 1) {
-            val diff = abs(samples[i + 1] - samples[i])
+            val diff = kotlin.math.abs(samples[i + 1].toDouble() - samples[i].toDouble())
             if (diff > maxDelta) maxDelta = diff
         }
         return maxDelta
     }
 }
+
+
+
